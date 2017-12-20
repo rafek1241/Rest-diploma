@@ -1,0 +1,60 @@
+﻿<div class="container">
+    <div class="row">
+        <h2>Categories</h2>
+    </div>
+    <div class="row mb-10">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addCategoryModal">
+            Dodaj nową kategorię
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content" ng-submit="vm.categoriesService.setCategory(category);">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addCategoryModalLabel">Dodaj nową kategorię</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nazwa kategorii</label>
+                            <input type="text" ng-model="category.name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Opis kategorii</label>
+                            <textarea rows="3" ng-model="category.description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="vm.clearForm()" data-dismiss="modal">Odrzuć</button>
+                        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Nazwa kategorii</th>
+                    <th>Opis kategorii</th>
+                    <th>Ilość produktów w kategorii</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="category in vm.categories">
+                    <td>{{category.name}}</td>
+                    <td>{{category.description}}</td>
+                    <td>{{category.products.length || 0}}</td>
+                    <td>
+                        <a class="btn btn-default" href="categories/{{category.categoryId}}">>></a>
+                        <span class="btn btn-danger" ng-click="vm.categoriesService.removeCategory(category.categoryId)"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

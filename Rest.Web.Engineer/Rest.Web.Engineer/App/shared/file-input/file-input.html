@@ -1,0 +1,15 @@
+﻿<div class="">
+    <div class="btn btn-primary file-btn">
+        Choose files to upload
+        <input class="file-input" ng-model="model" type="file" multiple
+               style="position: absolute; width: 100%;height:100%;top:0; left: 0;" />
+    </div>
+    <div class="panel panel-default mt-10" ng-if="previews.length > 0">
+        <div class="panel-body container-fluid">
+            <div class="col-xs-4" ng-repeat="image in model">
+                <img class="img-responsive" ng-src="{{previews[$index]}}" />
+                <label>{{image.name}}</label>
+            </div>
+        </div>
+    </div>
+</div>

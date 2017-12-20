@@ -1,0 +1,20 @@
+{
+  "author": "Rafeq1241",
+  "description": "Robert Szachnowski's magic-little-shop engineer webpage",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "jit-grunt": "^0.10.0"
+  },
+  "keywords": [
+    "magic-little-shop"
+  ],
+  "license": "SOFTWARE",
+  "main": "Gruntfile.js",
+  "name": "magic-little-shop",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

@@ -1,0 +1,39 @@
+﻿.helper-mg-pd(@jump,@count) when (@count > 0) {
+    .helper-mg-pd(@jump,(@count - 1));
+
+    @summary: @jump*@count;
+
+    .mt-@{summary} {
+        margin-top: (@summary * 1px);
+    }
+
+    .ml-@{summary} {
+        margin-left: (@summary * 1px);
+    }
+
+    .mr-@{summary} {
+        margin-right: (@summary * 1px);
+    }
+
+    .mb-@{summary} {
+        margin-bottom: (@summary * 1px);
+    }
+
+    .pt-@{summary} {
+        padding-top: (@summary * 1px);
+    }
+
+    .pl-@{summary} {
+        padding-left: (@summary * 1px);
+    }
+
+    .pr-@{summary} {
+        padding-right: (@summary * 1px);
+    }
+
+    .pb-@{summary} {
+        padding-bottom: (@summary * 1px);
+    }
+}
+
+.helper-mg-pd(5,10);

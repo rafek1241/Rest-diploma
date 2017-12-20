@@ -1,0 +1,102 @@
+﻿<div class="container">
+    <div class="row">
+        <h2>
+            Products
+        </h2>
+    </div>
+    <div class="row mb-10">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addProductModal">
+            Dodaj nowy produkt
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content" ng-submit="vm.productsService.set(product);">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addProductModalLabel">Dodaj nową kategorię</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>Nazwa Produktu</label>
+                                    <input type="text" ng-model="product.name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>Kategorie produktu</label>
+                                    <tags-input ng-model="product.tags" add-from-autocomplete-only="true">
+                                        <auto-complete max-results-to-show="5" source="vm.categoriesService.getCategoriesContainsString($query)"></auto-complete>
+                                    </tags-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Dodaj zdjęcia do produktu</label>
+                            <file-input model="product.images" multiple="true"></file-input>
+                        </div>
+                        <div class="form-group">
+                            <label>Opis produktu</label>
+                            <textarea rows="3" ng-model="product.description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="vm.clearForm()" data-dismiss="modal">Odrzuć</button>
+                        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>Sposób wyświetlania produktów: </strong>
+                    <div class="btn-group">
+                        <button ng-click="listSelected = true" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-th-list">
+                            </span>List
+                        </button>
+                        <button ng-click="listSelected = false" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-th"></span>Grid
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+
+                </div>
+            </div>
+        </div>
+        <div id="products" class=" list-group" ng-class="listSelected === true ? 'list' : ''">
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            Product title
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                            Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    $21.000
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
