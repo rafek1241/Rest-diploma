@@ -8,9 +8,9 @@ using System.Web.Http;
 
 namespace Rest.Web.Engineer.Controllers
 {
-    public abstract class BaseApiController<TLogic, TContext> : ApiController where TContext : IDisposable, new() where TLogic : LogicBase<TContext>
+    public abstract class BaseApiController<TLogic> : ApiController where TLogic : LogicBase
     {
-        protected TLogic Logic;
+        protected readonly TLogic Logic;
 
         public BaseApiController()
         {

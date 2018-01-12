@@ -1,14 +1,13 @@
-﻿using Rest.Web.Engineer.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
+using Rest.Web.Engineer.Models;
 
 namespace Rest.Web.Engineer.Logic
 {
-    public class MenuLogic : LogicBase<Entities>
+    public class MenuLogic : LogicBase
     {
+
         public List<Menu> GetList()
         {
             return DbContext.Menus.ToList();

@@ -1,5 +1,5 @@
 /// <binding ProjectOpened='watch' />
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     require('jit-grunt')(grunt);
 
     grunt.initConfig({

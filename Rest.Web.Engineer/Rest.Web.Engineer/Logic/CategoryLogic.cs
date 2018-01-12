@@ -1,61 +1,52 @@
-﻿using Rest.Web.Engineer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+using Rest.Web.Engineer.Models;
 
 namespace Rest.Web.Engineer.Logic
 {
-    public class CategoryLogic
+    public class CategoryLogic : LogicBase
     {
-        private readonly Entities Db;
-        public CategoryLogic(Entities db)
-        {
-            Db = db;
-        }
 
         public IEnumerable<Category> GetCategories()
         {
-            return Db.Categories;
+            return DbContext.Categories;
         }
 
         public Category GetCategory(long id)
         {
-            return Db.Categories.Find(id);
+            return DbContext.Categories.Find(id);
         }
 
         public HttpResponseMessage RemoveCategory(long id)
         {
-            var category = Db.Categories.Find(id);
+            var category = DbContext.Categories.Find(id);
 
             if (category == null)
-            {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
-            }
 
-            Db.Categories.Remove(category);
-            Db.SaveChanges();
+            DbContext.Categories.Remove(category);
+            DbContext.SaveChanges();
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, DbContext.Categories.AsEnumerable());
         }
 
         internal IEnumerable<Category> GetCategories(string name)
         {
-            return Db.Categories.Where(p => p.Name.Contains(name));
+            return DbContext.Categories.Where(p => p.Name.Contains(name));
         }
 
         public HttpResponseMessage SetCategory(Category value)
         {
             try
             {
-                Db.Categories.Add(value);
-                Db.SaveChanges();
+                DbContext.Categories.Add(value);
+                DbContext.SaveChanges();
 
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.Created, DbContext.Categories.AsEnumerable());
             }
             catch (Exception)
             {
@@ -65,17 +56,21 @@ namespace Rest.Web.Engineer.Logic
 
         public HttpResponseMessage UpdateCategory(long id, Category value)
         {
-            var category = Db.Categories.Find(id);
+            var category = DbContext.Categories.Find(id);
 
             if (category == null)
-            {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
-            }
 
-            category = value;
-            Db.SaveChanges();
+            category.Products.Where(categoryProduct => value.Products.All(p => p.ProductId != categoryProduct.ProductId))
+                .ToList().ForEach(p => category.Products.Remove(p));
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            category.Name = value.Name;
+            category.Description = value.Description;
+
+            DbContext.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.OK, category);
         }
+
     }
 }

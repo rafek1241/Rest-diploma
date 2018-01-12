@@ -3,10 +3,18 @@
     angular.module('app.products')
         .controller("ProductController", productController);
 
-    productController.$inject = ['$scope'];
+    productController.$inject = ['productsService', 'categoriesService'];
 
-    function productController($scope) {
+    function productController(productsService, categoriesService) {
         var vm = this;
+        vm.categoriesService = categoriesService;
+        vm.productsService = productsService;
+
+        activate();
+
+        function activate() {
+            vm.product = productsService.product;
+        };
 
     }
 

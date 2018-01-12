@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using Rest.Web.Engineer.Models;
 
 namespace Rest.Web.Engineer.Logic
 {
-    public abstract class LogicBase<TContext> where TContext : IDisposable, new()
+    public abstract class LogicBase
     {
-        protected readonly TContext DbContext;
+        protected readonly Entities DbContext;
+
+        protected HttpRequestMessage Request => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
 
         protected LogicBase()
         {
-            DbContext = new TContext();
+            DbContext = new Entities();
         }
 
-        protected LogicBase(TContext context)
+        protected LogicBase(Entities context)
         {
             DbContext = context;
         }

@@ -1,1 +1,51 @@
-﻿<h1>Kategoria: {{vm.category.name}}</h1>
+﻿<form class="container form-horizontal" ng-submit="vm.updateCategory()">
+    <div class="row mt-40">
+        <div class="pull-left col-xs-10">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="form-group-input">Kategoria</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="form-group-input" ng-model="vm.category.name" placeholder="Kategoria">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="description-category-input">Opis</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="description-category-input" placeholder="Opis" ng-model="vm.category.description">
+                </div>
+            </div>
+            <div class="page-header">
+                <h3>Produkty w tej kategorii</h3>
+            </div>
+            <div id="products" class=" list-group" ng-class="listSelected === true ? 'list' : ''">
+                <div class="item  col-xs-4 col-lg-4" ng-repeat="productItem in vm.category.products">
+                    <div class="thumbnail">
+                        <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                        <div class="caption">
+                            <h4 class="group inner list-group-item-heading">
+                                {{productItem.name}}
+                            </h4>
+                            <p class="tags">
+                                <a class="label label-default" ng-href="categories/{{tag.categoryId}}" ng-repeat="tag in productItem.productCategories">{{tag.name}}</a>
+                            </p>
+                            <p class="group inner list-group-item-text">
+                                {{productItem.description}}
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-12 ">
+                                    <p class="lead">
+                                        {{productItem.price | currency:"PLN"}}
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 ">
+                                    <span class="btn btn-success pull-right ml-5" ng-click="vm.cartService.addToCart(productItem)">Dodaj do koszyka</span>
+                                    <span class="btn btn-danger btn-sm pull-right" ng-click="vm.removeProductFromCategory(productItem.productId)">Usuń z kategorii</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="pull-right col-xs-2 btn btn-success bt-block"> Zapisz zmiany</button>
+    </div>
+</form>

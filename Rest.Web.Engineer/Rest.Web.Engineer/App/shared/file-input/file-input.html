@@ -1,13 +1,16 @@
 ﻿<div class="">
     <div class="btn btn-primary file-btn">
-        Choose files to upload
-        <input class="file-input" ng-model="model" type="file" multiple
-               style="position: absolute; width: 100%;height:100%;top:0; left: 0;" />
+        Wybierz zdjęcia..
+        <input class="file-input" ng-model="model" type="file" multiple ng-change="filesChanged()"
+               style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" />
     </div>
-    <div class="panel panel-default mt-10" ng-if="previews.length > 0">
-        <div class="panel-body container-fluid">
+    <div class="panel panel-default mt-10">
+        <div class="panel-body files-preview container-fluid">
             <div class="col-xs-4" ng-repeat="image in model">
-                <img class="img-responsive" ng-src="{{previews[$index]}}" />
+                <img class="img-responsive" ng-if="!image.content" ng-src="{{previews[$index]}}" alt="" />
+                <div class="img-responsive file-preview" ng-if="image.content" style="background-image:url(data:{{image.type}};base64,{{image.content}})">
+                    <span class="remove-image-button" ng-click="removeImage(image.fileId)"><i class="glyphicon glyphicon-remove"></i></span>
+                </div>
                 <label>{{image.name}}</label>
             </div>
         </div>

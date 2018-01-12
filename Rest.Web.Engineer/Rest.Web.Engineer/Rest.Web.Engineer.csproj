@@ -114,6 +114,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -180,33 +181,53 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CartProductController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Filters\ErrorFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\CartLogic.cs" />
+    <Compile Include="Logic\CartProductLogic.cs" />
     <Compile Include="Logic\CategoryLogic.cs" />
+    <Compile Include="Logic\DbContextExtensions.cs" />
     <Compile Include="Logic\LogicBase.cs" />
     <Compile Include="Logic\MenuLogic.cs" />
+    <Compile Include="Logic\OrderLogic.cs" />
     <Compile Include="Logic\ProductLogic.cs" />
-    <Compile Include="Migrations\201712101655044_InitialCreate.cs" />
-    <Compile Include="Migrations\201712101655044_InitialCreate.Designer.cs">
-      <DependentUpon>201712101655044_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201712310006435_initial.cs" />
+    <Compile Include="Migrations\201712310006435_initial.Designer.cs">
+      <DependentUpon>201712310006435_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801021703001_2-01-2018.cs" />
+    <Compile Include="Migrations\201801021703001_2-01-2018.Designer.cs">
+      <DependentUpon>201801021703001_2-01-2018.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\ProductViewModel.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartProduct.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DbContext.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Param.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.module.js" />
     <Content Include="App\app.routing.js" />
+    <Content Include="App\cart\cart.controller.js" />
+    <Content Include="App\cart\cart.html" />
+    <Content Include="App\cart\cart.module.js" />
+    <Content Include="App\cart\cart.service.js" />
     <Content Include="App\categories\categories.controller.js" />
     <Content Include="App\categories\categories.module.js" />
     <Content Include="App\categories\categories.service.js" />
@@ -215,6 +236,10 @@
     <Content Include="App\core\core.run.js" />
     <Content Include="App\homepage\homepage.controller.js" />
     <Content Include="App\homepage\homepage.module.js" />
+    <Content Include="App\order\order.controller.js" />
+    <Content Include="App\order\order.html" />
+    <Content Include="App\order\order.module.js" />
+    <Content Include="App\order\order.service.js" />
     <Content Include="App\products\products.controller.js" />
     <Content Include="App\products\products.module.js" />
     <Content Include="App\products\products.service.js" />
@@ -239,6 +264,9 @@
     <Content Include="App\homepage\home.html" />
     <Content Include="App\products\product\product.html" />
     <Content Include="App\products\products.html" />
+    <Content Include="Images\personal_delivery.png" />
+    <Content Include="Images\via_online_bank.png" />
+    <Content Include="Images\via_on_delivery.png" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-aria.js" />
     <Content Include="Scripts\angular-cookies.js" />
@@ -338,6 +366,7 @@
     <Content Include="Content\Bootstrap\wells.less" />
     <Content Include="App\shared\mixins.less" />
     <Content Include="App\shared\file-input\file-input.less" />
+    <Content Include="App\order\order.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\filesaver.js" />
@@ -371,8 +400,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712101655044_InitialCreate.resx">
-      <DependentUpon>201712101655044_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712310006435_initial.resx">
+      <DependentUpon>201712310006435_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801021703001_2-01-2018.resx">
+      <DependentUpon>201801021703001_2-01-2018.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

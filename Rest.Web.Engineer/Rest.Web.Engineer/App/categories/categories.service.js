@@ -37,23 +37,15 @@
         }
 
         function setCategory(model) {
-            return $http.post(entityUrl, model).then(function () {
-                $route.reload();
-                $(".modal-backdrop").remove();
-            });
-
+            return $http.post(entityUrl, model);
         }
 
         function updateCategory(id, model) {
-            return $http.put(entityUrl, [id, model]).then(function () {
-                $route.reload();
-            });
+            return $http.put(entityUrl + "/" + id, model);
         }
 
         function removeCategory(id) {
-            return $http.delete(entityUrl + "/" + id).then(function () {
-                $route.reload();
-            });
+            return $http.delete(entityUrl + "/" + id);
         }
 
     }

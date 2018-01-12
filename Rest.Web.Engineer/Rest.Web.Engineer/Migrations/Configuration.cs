@@ -40,7 +40,7 @@ namespace Rest.Web.Engineer.Migrations
                 },
                 new Menu()
                 {
-                    Title="Produkty",
+                    Title = "Produkty",
                     Icon = "glyphicon-list-alt",
                     Href = "/products",
                     MenuId = 3
@@ -50,13 +50,94 @@ namespace Rest.Web.Engineer.Migrations
                     MenuId = 4,
                     Title = "Menu",
                     Icon = "glyphicon-shopping-cart",
-                    Href = "/cart"
+                    Href = "/carts"
                 },
-
             };
 
             context.Menus.AddOrUpdate(menus);
 
+            var categories = new Category[]
+            {
+                new Category()
+                {
+                    Products = null,
+                    CategoryId = 1,
+                    Description = "",
+                    Name = "Jedzenie"
+                },
+                new Category()
+                {
+                    Products = null,
+                    CategoryId = 1,
+                    Description = "",
+                    Name = "Komputery"
+                },
+                new Category()
+                {
+                    Products = null,
+                    CategoryId = 1,
+                    Description = "",
+                    Name = "Odzie¿"
+                },
+                new Category()
+                {
+                    Products = null,
+                    CategoryId = 1,
+                    Description = "",
+                    Name = "Motoryzacja"
+                },
+
+            };
+
+            context.Categories.AddOrUpdate(categories);
+
+            var @params = new Param[]
+            {
+                new Param()
+                {
+                    ParamId = 1,
+                    Code = "SMTP_PORT",
+                    Value = "2525",
+                },
+                new Param()
+                {
+                    ParamId = 2,
+                    Code = "SMTP_HOST",
+                    Value = "smtp.mailtrap.io",
+                },
+                new Param()
+                {
+                    ParamId = 3,
+                    Code = "SMTP_USERNAME",
+                    Value = "83db0c2b4b392d",
+                },
+                new Param()
+                {
+                    ParamId = 4,
+                    Code = "SMTP_PASSWORD",
+                    Value = "87a4701fcce281",
+                },
+                new Param()
+                {
+                    ParamId = 5,
+                    Code = "OWNER_MAIL",
+                    Value = "rafeq1241@gmail.com"
+                },
+                new Param()
+                {
+                    ParamId = 6,
+                    Code="OWNER_ACCOUNT_NUMBER",
+                    Value = "22 1240 0001 7546 0049 6227 1208"
+                }, 
+                new Param()
+                {
+                    ParamId = 7,
+                    Code="OWNER_NAME_AND_SURNAME",
+                    Value="Jan Kowalski"
+                }, 
+            };
+
+            context.Params.AddOrUpdate(@params);
         }
     }
 }

@@ -1,28 +1,21 @@
-﻿using Rest.Web.Engineer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using Rest.Web.Engineer.Models.Api;
+using System.Transactions;
+using Rest.Web.Engineer.Models;
+using WebGrease.Css.Extensions;
 
 namespace Rest.Web.Engineer.Logic
 {
-    public class ProductLogic : LogicBase<Entities>
+    public class ProductLogic : LogicBase
     {
-        public IEnumerable<ProductViewModel> GetProducts(int page, int perPage)
+
+        public IEnumerable<Product> GetProducts(int page, int perPage)
         {
-            return from x in DbContext.Products.OrderBy(p => p.ProductId).Skip(((page - 1) * perPage)).Take(perPage)
-                   select new ProductViewModel()
-                   {
-                       ProductId = x.ProductId,
-                       ProductCategories = x.ProductCategories,
-                       Name = x.Name,
-                       Description = x.Description,
-                       Image = x.Images.FirstOrDefault()
-                   };
+            return DbContext.Products.OrderBy(p => p.ProductId).Skip((page - 1) * perPage).Take(perPage);
         }
 
         public Product GetProduct(int id)
@@ -34,6 +27,16 @@ namespace Rest.Web.Engineer.Logic
         {
             try
             {
+
+                var tags = value.ProductCategories;
+                value.ProductCategories = new List<Category>();
+                tags.ForEach(category => value.ProductCategories.Add(DbContext.Categories.Find(category.CategoryId)));
+
+                foreach (var image in value.Images)
+                {
+                    image.Content = Convert.FromBase64String(image.ContentBase64);
+                }
+
                 DbContext.Products.Add(value);
                 DbContext.SaveChanges();
 
@@ -47,15 +50,50 @@ namespace Rest.Web.Engineer.Logic
 
         public HttpResponseMessage UpdateProduct(int id, Product value)
         {
-            var product = DbContext.Products.Find(id);
-
-            if (product == null)
+            using (var scope = new TransactionScope())
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
-            }
+                try
+                {
+                    var product = DbContext.Products.Find(id);
 
-            product = value;
-            DbContext.SaveChanges();
+                    if (product == null)
+                        return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+                    var productImages = product.Images.ToList();
+
+                    var destinationCategories = DbContext.Categories.AsEnumerable().Where(p =>
+                        value.ProductCategories.Any(w => w.CategoryId == p.CategoryId)).ToList();
+
+
+                    foreach (var valueImage in value.Images.Where(p => !string.IsNullOrEmpty(p.ContentBase64)))
+                    {
+
+                        valueImage.Content = Convert.FromBase64String(valueImage.ContentBase64);
+
+                        if (product.Images.Any(p => p.FileId == valueImage.FileId)) continue;
+
+                        DbContext.Files.Add(valueImage);
+                        productImages.Add(valueImage);
+                    }
+
+                    DbContext.SaveChanges();
+
+                    product.Images = productImages;
+                    product.ProductCategories.ToList().AddRange(destinationCategories.Where(p => p.Products.All(w => w.ProductId != product.ProductId)));
+                    product.Name = value.Name;
+                    product.Description = value.Description;
+                    product.Price = value.Price;
+
+
+                    DbContext.SaveChanges();
+                    scope.Complete();
+                }
+                catch (Exception er)
+                {
+                    scope.Dispose();
+                    throw new Exception("Transakcja aktualizacji produktu nie dobiegła do końca.", er);
+                }
+            }
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
@@ -65,14 +103,25 @@ namespace Rest.Web.Engineer.Logic
             var product = DbContext.Products.Find(id);
 
             if (product == null)
-            {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
-            }
 
+            DbContext.Files.RemoveRange(product.Images);
             DbContext.Products.Remove(product);
             DbContext.SaveChanges();
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, DbContext.Products.AsEnumerable());
+        }
+
+        public HttpResponseMessage RemoveImageFromProduct(long productId, long imgId)
+        {
+            var product = DbContext.Products.Find(productId);
+
+            if (product == null) return Request.CreateResponse(HttpStatusCode.NotFound, "Nie znaleziono produktu!");
+
+            DbContext.Files.Remove(product.Images.First(w => w.FileId == imgId));
+            DbContext.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.OK, product);
         }
     }
 }

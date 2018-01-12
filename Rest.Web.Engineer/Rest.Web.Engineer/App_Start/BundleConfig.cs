@@ -10,19 +10,19 @@ namespace Rest.Web.Engineer
         {
             bundles.Add(new ScriptBundle("~/Scripts/all")
                 .Include(
-                "~/Scripts/jquery-3.2.1.js",
-                "~/Scripts/angular.js",
-                "~/Scripts/angular-ui/ui-bootstrap.js",
-                "~/Scripts/filesaver.js",
-                "~/Scripts/i18n/angular-locale_pl-pl.js"
+                    "~/Scripts/jquery-3.2.1.js",
+                    "~/Scripts/angular.js",
+                    "~/Scripts/angular-ui/ui-bootstrap.js",
+                    "~/Scripts/filesaver.js",
+                    "~/Scripts/i18n/angular-locale_pl-pl.js"
                 )
                 .IncludeDirectory("~/Scripts", "*.js")
                 .IncludeDirectory("~/App", "*.module.js", true)
                 .IncludeDirectory("~/App", "*.js", true)
-                );
+            );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css"));
+                "~/Content/site.css"));
         }
     }
 }

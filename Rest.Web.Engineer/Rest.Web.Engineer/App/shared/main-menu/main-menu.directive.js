@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
     angular.module('app.shared')
         .directive('mainMenu', mainMenu);
 
@@ -15,13 +15,13 @@
         function link(scope, element, attr) {
             scope.selectMenu = selectMenu;
 
-            $http.get('api/menu/getList').then(function (response) {
+            $http.get('api/menu').then(function(response) {
                 scope.links = response.data;
             });
 
             function selectMenu(link) {
 
-                links.forEach(function (item) {
+                links.forEach(function(item) {
                     item.active = false;
                 });
                 link.active = true;

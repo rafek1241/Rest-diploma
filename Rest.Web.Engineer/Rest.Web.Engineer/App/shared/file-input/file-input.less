@@ -11,15 +11,44 @@
         opacity: 0;
         z-index: 10;
     }
-
 }
 
 .files-preview {
-    padding: 15px;
-    margin: 5px;
-    border: 1px solid black;
-
     & > div {
-        display: flex;
+    }
+
+    .file-preview {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 240px;
+        width: 100%;
+        position: relative;
+
+        .remove-image-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-color: #be2020;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+
+            & > i {
+                color: white;
+                margin: 0;
+                margin-right: 2px;
+                padding: 0;
+                cursor: unset;
+            }
+
+            &:hover {
+                background-color: #dc3a3a;
+            }
+        }
     }
 }

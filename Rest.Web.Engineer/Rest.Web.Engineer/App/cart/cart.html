@@ -1,0 +1,54 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1>
+                Koszyk <small>Zobacz zawartość</small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nazwa produktu</th>
+                    <th>Ilość</th>
+                    <th>Cena</th>
+                    <th>Operacje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in vm.cartService.cart.products">
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.product.name}}</td>
+                    <td>
+                        <span class="pull-left">
+                            {{item.count}}
+                        </span>
+                        <span class="pull-right">
+                            <span class="btn btn-sm btn-danger" ng-click="vm.cartService.decreaseCount(item)"><i class="glyphicon glyphicon-minus"></i></span>
+                            <span class="btn btn-sm btn-success" ng-click="vm.cartService.increaseCount(item)"><i class="glyphicon glyphicon-plus"></i></span>
+                        </span>
+                    </td>
+                    <td>{{(item.product.price * item.count) | currency}}</td>
+                    <td>
+                        <span class="btn btn-danger" ng-click="vm.cartService.removeFromCart(item.cartProductId)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3"></td>
+                <td style="font-weight: bold; font-size: large;">{{vm.getCartTotal() | currency}}</td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary btn-lg pull-right" ng-disabled="!(vm.cartService.cart.products.length > 0)" ng-click="vm.cartService.goToPayment()">Przejdź do płatności</button>
+        <button class="btn btn-danger pull-left btn-sm" ng-click="vm.cartService.clearCart()">Odrzuć koszyk</button>
+    </div>
+</div>

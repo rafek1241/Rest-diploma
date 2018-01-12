@@ -1,41 +1,42 @@
-﻿using Rest.Web.Engineer.Logic;
-using Rest.Web.Engineer.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
+using Rest.Web.Engineer.Logic;
+using Rest.Web.Engineer.Models;
 
 namespace Rest.Web.Engineer.Controllers
 {
-    public class CategoryController : ApiController /*BaseApiController<CategoryLogic, Entities>*/
+    public class CategoryController : BaseApiController<CategoryLogic>
     {
-        private readonly CategoryLogic Logic;
 
-        public CategoryController()
+        public IEnumerable<Category> Get()
         {
-            Logic = new CategoryLogic(new Entities());
+            return Logic.GetCategories();
         }
 
-        public CategoryController(CategoryLogic logic)
+        public IEnumerable<Category> Get(string name)
         {
-            Logic = logic;
+            return Logic.GetCategories(name);
         }
 
-        [HttpGet]
-        public IEnumerable<Category> Get() => Logic.GetCategories();
+        public Category Get(int id)
+        {
+            return Logic.GetCategory(id);
+        }
 
-        [HttpGet]
-        public IEnumerable<Category> Get(string name) => Logic.GetCategories(name);
+        public HttpResponseMessage Post([FromBody] Category value)
+        {
+            return Logic.SetCategory(value);
+        }
 
-        [HttpGet]
-        public Category Get(int id) => Logic.GetCategory(id);
+        public HttpResponseMessage Put(int id, [FromBody] Category value)
+        {
+            return Logic.UpdateCategory(id, value);
+        }
 
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody]Category value) => Logic.SetCategory(value);
-
-        [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody]Category value) => Logic.UpdateCategory(id, value);
-
-        [HttpDelete]
-        public HttpResponseMessage Delete(long id) => Logic.RemoveCategory(id);
+        public HttpResponseMessage Delete(long id)
+        {
+            return Logic.RemoveCategory(id);
+        }
     }
 }

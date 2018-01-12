@@ -15,8 +15,14 @@
             getOne: getOne,
             set: set,
             update: update,
-            remove: remove
+            remove: remove,
+            removeImageFromProduct: removeImageFromProduct
         };
+
+        function removeImageFromProduct(productId, imageId) {
+            var a = entityUrl + "/" + productId + '/images/' + imageId;
+            return $http.delete(a);
+        }
 
         function getList(page, perPage) {
             return $http.get(entityUrl,
@@ -41,15 +47,11 @@
         }
 
         function update(id, model) {
-            return $http.put(entityUrl, [id, model]).then(function () {
-                $route.reload();
-            });
+            return $http.put(entityUrl + "/" + id, model);
         }
 
         function remove(id) {
-            return $http.delete(entityUrl + "/"  + id).then(function () {
-                $route.reload();
-            });
+            return $http.delete(entityUrl + "/" + id);
         }
 
     }

@@ -14,8 +14,10 @@ namespace Rest.Web.Engineer.Models
 
         public string Description { get; set; }
 
-        public ICollection<Category> ProductCategories { get; set; }
+        public virtual ICollection<CartProduct> CartProducts { get; set; }
+        public virtual ICollection<Category> ProductCategories { get; set; }
 
-        public ICollection<File> Images { get; set; }
+        public virtual ICollection<File> Images { get; set; }
+        public decimal Price { get; set; }
     }
 }

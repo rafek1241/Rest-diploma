@@ -11,9 +11,11 @@
         <!-- Modal -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
             <div class="modal-dialog" role="document">
-                <form class="modal-content" ng-submit="vm.categoriesService.setCategory(category);">
+                <form class="modal-content" ng-submit="vm.setCategory(category);">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         <h4 class="modal-title" id="addCategoryModalLabel">Dodaj nową kategorię</h4>
                     </div>
                     <div class="modal-body">
@@ -37,23 +39,25 @@
     <div class="row">
         <table class="table table-bordered table-responsive">
             <thead>
-                <tr>
-                    <th>Nazwa kategorii</th>
-                    <th>Opis kategorii</th>
-                    <th>Ilość produktów w kategorii</th>
-                    <th>Akcje</th>
-                </tr>
+            <tr>
+                <th>Nazwa kategorii</th>
+                <th>Opis kategorii</th>
+                <th>Ilość produktów w kategorii</th>
+                <th>Akcje</th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="category in vm.categories">
-                    <td>{{category.name}}</td>
-                    <td>{{category.description}}</td>
-                    <td>{{category.products.length || 0}}</td>
-                    <td>
-                        <a class="btn btn-default" href="categories/{{category.categoryId}}">>></a>
-                        <span class="btn btn-danger" ng-click="vm.categoriesService.removeCategory(category.categoryId)"><i class="glyphicon glyphicon-remove"></i></span>
-                    </td>
-                </tr>
+            <tr ng-repeat="category in vm.categories">
+                <td>{{category.name}}</td>
+                <td>{{category.description}}</td>
+                <td>{{category.products.length || 0}}</td>
+                <td>
+                    <a class="btn btn-default" href="categories/{{category.categoryId}}">>></a>
+                    <span class="btn btn-danger" ng-click="vm.removeCategory(category.categoryId)">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </span>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

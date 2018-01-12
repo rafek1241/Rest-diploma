@@ -1,8 +1,9 @@
-﻿(function () {
+﻿(function() {
     'use strict';
 
     angular.module("app.core",
-        ['ui.bootstrap',
+        [
+            'ui.bootstrap',
             'ngRoute',
             'ngCookies',
             'ngAnimate',

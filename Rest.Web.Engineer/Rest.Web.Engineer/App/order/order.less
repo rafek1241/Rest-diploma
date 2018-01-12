@@ -1,0 +1,44 @@
+﻿.payment-methods-container {
+    display: flex;
+
+    & > div[class*='col-'] {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        & *[class*='panel']{
+            height:100%;
+        }
+    }
+}
+
+
+.payment {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    float: left;
+
+    &.payment-personal {
+        height: 62px;
+        width: 52px;
+        background: url('../Images/personal_delivery.png');
+        background-position: center center;
+        background-size: cover;
+    }
+
+    &.payment-online-bank {
+        height: 52px;
+        width: 52px;
+        background: url('../Images/via_online_bank.png');
+        background-position: center center;
+        background-size: cover;
+    }
+
+    &.payment-on-delivery {
+        height: 62px;
+        width: 52px;
+        background: url('../Images/via_on_delivery.png');
+        background-position: center center;
+        background-size: cover;
+    }
+}
