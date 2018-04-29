@@ -94,15 +94,23 @@
                             {{productItem.description}}
                         </p>
                         <div class="row">
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-12">
                                 <p class="lead">
                                     {{productItem.price | currency:"PLN"}}
                                 </p>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <button class="btn btn-success pull-right" ng-click="vm.cartService.addToCart(productItem)">Add to cart</button>
-                                <a class="btn btn-info pull-left" ng-href="products/{{productItem.productId}}"><i class="glyphicon glyphicon-edit"></i></a>
-                                <button class="btn btn-sm btn-danger pull-left" ng-click="vm.remove(productItem.productId)"><i class="glyphicon glyphicon-remove"></i></button>
+                            <div class="col-xs-12">
+                                <div class="mb-10">
+                                    <div class="">
+                                        <button class="btn btn-sm btn-success pull-right" ng-click="vm.cartService.addToCart(productItem)">Add to cart</button>
+                                    </div>
+                                    <div class="">
+                                        <a class="btn btn-sm btn-info mr-5 pull-left" ng-href="products/{{productItem.productId}}"><i class="glyphicon glyphicon-edit"></i></a>
+                                    </div>
+                                    <div class="">
+                                        <button class="btn btn-sm btn-danger pull-left" ng-click="vm.remove(productItem.productId)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

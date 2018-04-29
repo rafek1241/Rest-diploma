@@ -13,6 +13,6 @@ namespace Rest.Web.Engineer.Controllers
     public class OrderController : BaseApiController<OrderLogic>
     {
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Order order) => Logic.SetupOrder(order);
+        public HttpResponseMessage Post([FromBody] Order order) => Logic.CreateOrder(order);
     }
 }

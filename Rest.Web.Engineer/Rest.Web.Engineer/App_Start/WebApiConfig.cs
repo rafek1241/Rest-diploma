@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json;
 using Rest.Web.Engineer.Filters;
 
 namespace Rest.Web.Engineer
@@ -18,7 +19,7 @@ namespace Rest.Web.Engineer
 
             //Remove self-referencing LOOP
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
-                = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                = ReferenceLoopHandling.Ignore;
 
             config.Routes.MapHttpRoute(
                 name: "CartProducts",

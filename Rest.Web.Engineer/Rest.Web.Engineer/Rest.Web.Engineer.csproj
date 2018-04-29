@@ -184,7 +184,9 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CartProductController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -195,8 +197,10 @@
     <Compile Include="Logic\CartLogic.cs" />
     <Compile Include="Logic\CartProductLogic.cs" />
     <Compile Include="Logic\CategoryLogic.cs" />
+    <Compile Include="Logic\CountryLogic.cs" />
     <Compile Include="Logic\DbContextExtensions.cs" />
     <Compile Include="Logic\LogicBase.cs" />
+    <Compile Include="Logic\MailLogic.cs" />
     <Compile Include="Logic\MenuLogic.cs" />
     <Compile Include="Logic\OrderLogic.cs" />
     <Compile Include="Logic\ProductLogic.cs" />
@@ -215,9 +219,11 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DbContext.cs" />
     <Compile Include="Models\File.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Param.cs" />
+    <Compile Include="Models\PersonalInformation.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -234,6 +240,8 @@
     <Content Include="App\categories\category\category.controller.js" />
     <Content Include="App\core\core.module.js" />
     <Content Include="App\core\core.run.js" />
+    <Content Include="App\country\country.module.js" />
+    <Content Include="App\country\country.service.js" />
     <Content Include="App\homepage\homepage.controller.js" />
     <Content Include="App\homepage\homepage.module.js" />
     <Content Include="App\order\order.controller.js" />
@@ -406,6 +414,9 @@
     <EmbeddedResource Include="Migrations\201801021703001_2-01-2018.resx">
       <DependentUpon>201801021703001_2-01-2018.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

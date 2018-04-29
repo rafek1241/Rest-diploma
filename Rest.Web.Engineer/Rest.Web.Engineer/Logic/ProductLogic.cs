@@ -40,7 +40,7 @@ namespace Rest.Web.Engineer.Logic
                 DbContext.Products.Add(value);
                 DbContext.SaveChanges();
 
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return new HttpResponseMessage(HttpStatusCode.Created);
             }
             catch (Exception)
             {
@@ -50,49 +50,49 @@ namespace Rest.Web.Engineer.Logic
 
         public HttpResponseMessage UpdateProduct(int id, Product value)
         {
-            using (var scope = new TransactionScope())
+            try
             {
-                try
+                var product = DbContext.Products.Find(id);
+
+                if (product == null)
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+                var productImages = product.Images.ToList();
+
+                var destinationCategories = DbContext.Categories.AsEnumerable().Where(p =>
+                    value.ProductCategories.Any(w => w.CategoryId == p.CategoryId)).ToList();
+
+
+                foreach (var valueImage in value.Images.Where(p => !string.IsNullOrEmpty(p.ContentBase64)))
                 {
-                    var product = DbContext.Products.Find(id);
 
-                    if (product == null)
-                        return new HttpResponseMessage(HttpStatusCode.NotFound);
+                    valueImage.Content = Convert.FromBase64String(valueImage.ContentBase64);
 
-                    var productImages = product.Images.ToList();
+                    if (product.Images.Any(p => p.FileId == valueImage.FileId)) continue;
 
-                    var destinationCategories = DbContext.Categories.AsEnumerable().Where(p =>
-                        value.ProductCategories.Any(w => w.CategoryId == p.CategoryId)).ToList();
-
-
-                    foreach (var valueImage in value.Images.Where(p => !string.IsNullOrEmpty(p.ContentBase64)))
-                    {
-
-                        valueImage.Content = Convert.FromBase64String(valueImage.ContentBase64);
-
-                        if (product.Images.Any(p => p.FileId == valueImage.FileId)) continue;
-
-                        DbContext.Files.Add(valueImage);
-                        productImages.Add(valueImage);
-                    }
-
-                    DbContext.SaveChanges();
-
-                    product.Images = productImages;
-                    product.ProductCategories.ToList().AddRange(destinationCategories.Where(p => p.Products.All(w => w.ProductId != product.ProductId)));
-                    product.Name = value.Name;
-                    product.Description = value.Description;
-                    product.Price = value.Price;
-
-
-                    DbContext.SaveChanges();
-                    scope.Complete();
+                    DbContext.Files.Add(valueImage);
+                    productImages.Add(valueImage);
                 }
-                catch (Exception er)
+
+                product.Images = productImages;
+                var resultCategories =
+                    destinationCategories.Where(p => p.Products.All(w => w.ProductId != product.ProductId));
+
+                foreach (var category in resultCategories)
                 {
-                    scope.Dispose();
-                    throw new Exception("Transakcja aktualizacji produktu nie dobiegła do końca.", er);
+                    product.ProductCategories.Add(category);
                 }
+
+                product.Name = value.Name;
+                product.Description = value.Description;
+                product.Price = value.Price;
+
+
+                DbContext.SaveChanges();
+            }
+            catch (Exception er)
+            {
+                throw new Exception("Transakcja aktualizacji produktu nie dobiegła do końca.", er);
             }
 
             return new HttpResponseMessage(HttpStatusCode.OK);

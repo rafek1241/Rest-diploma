@@ -7416,3 +7416,6 @@ html {
 .list-group.list .list-group-item-text {
   margin: 0 0 11px;
 }
+p.tags .label {
+  margin-right: 5px;
+}

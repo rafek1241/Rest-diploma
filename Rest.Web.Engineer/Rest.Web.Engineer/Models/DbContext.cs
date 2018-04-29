@@ -31,6 +31,7 @@ namespace Rest.Web.Engineer.Models
         public virtual DbSet<CartProduct> CartProducts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Mail> Mail { get; set; }
     }
 
     //public class MyEntity
